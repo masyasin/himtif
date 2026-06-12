@@ -56,7 +56,7 @@ const Event = () => {
         {/* Event List */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <AnimatePresence>
-            {filteredEvents.map((event, idx) => (
+            {filteredEvents.map((event) => (
               <motion.div
                 layout
                 initial={{ opacity: 0, scale: 0.95 }}

@@ -61,7 +61,7 @@ const Prestasi = () => {
         {/* Achievements List */}
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
           <AnimatePresence>
-            {filteredPrestasi.map((item, idx) => {
+            {filteredPrestasi.map((item) => {
               const currentMedia = activeMedia[item.id] || 'Foto';
 
               return (
