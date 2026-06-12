@@ -1,0 +1,92 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  nim       String?  @unique
+  role      Role     @default(MAHASISWA)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  articles     Article[]
+  certificates Certificate[]
+}
+
+enum Role {
+  ADMIN
+  MAHASISWA
+  ALUMNI
+}
+
+model Article {
+  id        String   @id @default(uuid())
+  title     String
+  slug      String   @unique
+  content   String   @db.Text
+  category  String
+  authorId  String
+  author    User     @relation(fields: [authorId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model Event {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  date        DateTime
+  location    String?
+  type        String   // SEMINAR, WORKSHOP, COMPETITION
+  status      String   // UPCOMING, ONGOING, COMPLETED
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  
+  certificates Certificate[]
+}
+
+model Achievement {
+  id          String   @id @default(uuid())
+  title       String
+  studentName String
+  category    String
+  level       String   // NASIONAL, INTERNASIONAL
+  date        DateTime
+  createdAt   DateTime @default(now())
+}
+
+model Project {
+  id          String   @id @default(uuid())
+  title       String
+  description String   @db.Text
+  category    String   // WEB, MOBILE, IOT, AI
+  author      String
+  link        String?
+  createdAt   DateTime @default(now())
+}
+
+model Certificate {
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  eventId    String
+  event      Event    @relation(fields: [eventId], references: [id])
+  qrCodeUrl  String?
+  issuedDate DateTime @default(now())
+}
+
+model LibraryItem {
+  id          String   @id @default(uuid())
+  title       String
+  description String?  @db.Text
+  type        String   // EBOOK, MODULE, JOURNAL, REPOSITORY
+  fileUrl     String
+  createdAt   DateTime @default(now())
+}
