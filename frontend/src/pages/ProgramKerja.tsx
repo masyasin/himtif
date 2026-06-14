@@ -13,9 +13,20 @@ const ProgramKerja = () => {
     ? prokerList 
     : prokerList.filter(p => p.category === activeCategory);
 
+  const getStatusStyle = (status: string) => {
+    if (status === 'Selesai') return { bg: 'bg-emerald-500/10', text: 'text-emerald-400', border: 'border-emerald-500/20', gradient: 'from-emerald-400 to-green-500' };
+    if (status === 'Berjalan') return { bg: 'bg-blue-500/10', text: 'text-blue-400', border: 'border-blue-500/20', gradient: 'from-blue-400 to-cyan-500' };
+    return { bg: 'bg-amber-500/10', text: 'text-amber-400', border: 'border-amber-500/20', gradient: 'from-amber-400 to-orange-500' };
+  };
+
   return (
-    <div className="pt-40 pb-16 min-h-screen bg-slate-950">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-40 pb-16 min-h-screen bg-slate-950 relative overflow-hidden">
+      
+      {/* Decorative Background Glow */}
+      <div className="absolute top-1/4 left-0 w-96 h-96 bg-brand-primary/10 rounded-full blur-[120px] pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-brand-secondary/10 rounded-full blur-[120px] pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="text-center mb-12">
@@ -37,15 +48,15 @@ const ProgramKerja = () => {
         </div>
 
         {/* Categories Filter */}
-        <div className="flex flex-wrap gap-3 justify-center mb-12">
+        <div className="flex flex-wrap gap-3 justify-center mb-14">
           {categories.map((cat, idx) => (
             <button 
               key={idx}
               onClick={() => setActiveCategory(cat)}
-              className={`px-5 py-2 rounded-full text-sm font-bold transition-all ${
+              className={`px-5 py-2.5 rounded-full text-sm font-bold transition-all duration-300 ${
                 activeCategory === cat 
-                  ? 'bg-brand-primary text-white shadow-md' 
-                  : 'bg-slate-900 text-slate-400 hover:bg-slate-100 border border-slate-700'
+                  ? 'bg-gradient-to-r from-brand-primary to-indigo-600 text-white shadow-lg shadow-brand-primary/25 scale-105 border border-transparent' 
+                  : 'bg-slate-900/80 text-slate-400 hover:text-white border border-slate-800 hover:border-slate-600 hover:bg-slate-800'
               }`}
             >
               {cat}
@@ -54,81 +65,92 @@ const ProgramKerja = () => {
         </div>
 
         {/* Proker Cards */}
-        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6">
-          {filteredProker.map((item, idx) => (
-            <motion.div 
-              key={idx}
-              initial={{ opacity: 0, scale: 0.95 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.3 }}
-              className="bg-slate-900 p-6 rounded-3xl border border-slate-800 shadow-sm hover:shadow-lg transition-all flex flex-col"
-            >
-              {/* Card Header (Category & Status) */}
-              <div className="flex justify-between items-start mb-4">
-                <span className="text-xs font-bold px-3 py-1 rounded-full bg-slate-100 text-slate-400 border border-slate-700">
-                  {item.category}
-                </span>
-                <span className={`text-xs font-bold px-3 py-1 rounded-full border ${
-                  item.status === 'Selesai' ? 'bg-green-900/20 text-green-600 border-green-800' :
-                  item.status === 'Berjalan' ? 'bg-blue-50 text-blue-600 border-blue-200' :
-                  'bg-amber-50 text-amber-600 border-amber-200'
-                }`}>
-                  {item.status}
-                </span>
-              </div>
-              
-              {/* Title & Desc */}
-              <h3 className="text-xl font-bold text-white mb-2">{item.title}</h3>
-              <p className="text-slate-500 text-sm mb-6 flex-grow">{item.desc}</p>
+        <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-8">
+          {filteredProker.map((item, idx) => {
+            const statusStyle = getStatusStyle(item.status);
+            
+            return (
+              <motion.div 
+                key={idx}
+                initial={{ opacity: 0, scale: 0.95, y: 20 }}
+                animate={{ opacity: 1, scale: 1, y: 0 }}
+                transition={{ duration: 0.4, delay: idx * 0.05 }}
+                className="bg-slate-900/60 backdrop-blur-sm p-7 rounded-3xl border border-slate-800 shadow-xl hover:shadow-2xl hover:border-slate-600 hover:-translate-y-1.5 transition-all duration-300 flex flex-col relative overflow-hidden group"
+              >
+                {/* Accent Top Border */}
+                <div className={`absolute top-0 left-0 w-full h-1 bg-gradient-to-r ${statusStyle.gradient} opacity-70 group-hover:opacity-100 transition-opacity`} />
 
-              {/* Details (Jadwal, PJ) */}
-              <div className="space-y-3 mb-6 bg-slate-950 p-4 rounded-xl border border-slate-800">
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-8 h-8 rounded-full bg-brand-secondary/10 flex items-center justify-center text-brand-secondary">
-                    📅
-                  </div>
-                  <div>
-                    <div className="text-xs text-slate-500 font-bold">Jadwal Pelaksanaan</div>
-                    <div className="text-white font-medium">{item.jadwal}</div>
-                  </div>
+                {/* Card Header (Category & Status) */}
+                <div className="flex justify-between items-start mb-5 mt-1">
+                  <span className="text-[10px] uppercase tracking-wider font-bold px-3 py-1.5 rounded-full bg-slate-800 text-slate-300 border border-slate-700 shadow-sm">
+                    {item.category}
+                  </span>
+                  <span className={`text-[10px] uppercase tracking-wider font-bold px-3 py-1.5 rounded-full border shadow-sm ${statusStyle.bg} ${statusStyle.text} ${statusStyle.border}`}>
+                    {item.status}
+                  </span>
                 </div>
-                <div className="flex items-center gap-3 text-sm">
-                  <div className="w-8 h-8 rounded-full bg-brand-primary/10 flex items-center justify-center text-brand-primary">
-                    👤
-                  </div>
-                  <div>
-                    <div className="text-xs text-slate-500 font-bold">Penanggung Jawab</div>
-                    <div className="text-white font-medium">{item.pj}</div>
-                  </div>
-                </div>
-              </div>
+                
+                {/* Title & Desc */}
+                <h3 className="text-xl font-bold text-white mb-3 leading-tight group-hover:text-brand-secondary transition-colors">{item.title}</h3>
+                <p className="text-slate-400 text-sm mb-8 flex-grow leading-relaxed">{item.desc}</p>
 
-              {/* Progress Bar */}
-              <div>
-                <div className="flex justify-between text-xs font-bold text-slate-500 mb-2">
-                  <span>Progress Pencapaian</span>
-                  <span className="text-brand-secondary">{item.progress}%</span>
+                {/* Details (Jadwal, PJ) */}
+                <div className="space-y-4 mb-8 bg-slate-950/80 p-5 rounded-2xl border border-slate-800/50 shadow-inner">
+                  <div className="flex items-center gap-4 text-sm">
+                    <div className="w-10 h-10 rounded-xl bg-brand-secondary/10 flex items-center justify-center text-brand-secondary shadow-sm">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
+                    </div>
+                    <div>
+                      <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-0.5">Jadwal Pelaksanaan</div>
+                      <div className="text-slate-200 font-semibold">{item.jadwal}</div>
+                    </div>
+                  </div>
+                  <div className="flex items-center gap-4 text-sm">
+                    <div className="w-10 h-10 rounded-xl bg-brand-primary/10 flex items-center justify-center text-brand-primary shadow-sm">
+                      <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" /></svg>
+                    </div>
+                    <div>
+                      <div className="text-[10px] uppercase tracking-wider text-slate-500 font-bold mb-0.5">Penanggung Jawab</div>
+                      <div className="text-slate-200 font-semibold">{item.pj}</div>
+                    </div>
+                  </div>
                 </div>
-                <div className="w-full bg-slate-100 rounded-full h-2.5 overflow-hidden">
-                  <motion.div 
-                    initial={{ width: 0 }}
-                    animate={{ width: `${item.progress}%` }}
-                    transition={{ duration: 1, delay: 0.2 }}
-                    className={`h-full rounded-full ${
-                      item.progress === 100 ? 'bg-green-900/200' : 'bg-brand-secondary'
-                    }`}
-                  ></motion.div>
-                </div>
-              </div>
 
-            </motion.div>
-          ))}
+                {/* Progress Bar */}
+                <div className="mt-auto">
+                  <div className="flex justify-between text-xs font-bold text-slate-400 mb-3">
+                    <span className="flex items-center gap-1.5">
+                      <svg className="w-4 h-4 text-slate-500" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" /></svg>
+                      Progress
+                    </span>
+                    <span className={statusStyle.text}>{item.progress}%</span>
+                  </div>
+                  <div className="w-full bg-slate-800/80 rounded-full h-2.5 overflow-hidden shadow-inner">
+                    <motion.div 
+                      initial={{ width: 0 }}
+                      animate={{ width: `${item.progress}%` }}
+                      transition={{ duration: 1.2, delay: 0.3, ease: "easeOut" }}
+                      className={`h-full rounded-full bg-gradient-to-r ${statusStyle.gradient} shadow-sm relative`}
+                    >
+                      <div className="absolute inset-0 bg-white/20" />
+                    </motion.div>
+                  </div>
+                </div>
+
+              </motion.div>
+            );
+          })}
         </div>
 
         {filteredProker.length === 0 && (
-          <div className="text-center py-20 text-slate-500 font-medium">
-            Belum ada program kerja untuk kategori ini.
-          </div>
+          <motion.div 
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            className="text-center py-24"
+          >
+            <div className="text-5xl mb-4 opacity-50">📂</div>
+            <p className="text-slate-400 font-medium text-lg">Belum ada program kerja untuk kategori ini.</p>
+          </motion.div>
         )}
 
       </div>

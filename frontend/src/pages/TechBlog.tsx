@@ -15,9 +15,9 @@ const TechBlog = () => {
           <motion.h1 
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            className="text-4xl md:text-5xl font-display font-bold text-white mb-4"
+            className="text-4xl md:text-6xl font-display font-black tracking-tight text-white mb-6"
           >
-            Tech <span className="text-brand-secondary">Blog</span>
+            Tech <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-secondary to-emerald-400">Blog</span>
           </motion.h1>
           <motion.p 
             initial={{ opacity: 0, y: 20 }}
@@ -30,27 +30,29 @@ const TechBlog = () => {
         </div>
 
         {/* Dashboard Tabs */}
-        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-8 bg-slate-900 p-2 rounded-2xl shadow-sm border border-slate-700">
-          <div className="flex gap-2 w-full sm:w-auto">
+        <div className="flex flex-col sm:flex-row justify-between items-center gap-4 mb-12 bg-slate-900/60 backdrop-blur-xl p-3 rounded-3xl shadow-xl border border-slate-700/50">
+          <div className="flex gap-2 w-full sm:w-auto relative">
+            <div className={`absolute inset-0 bg-gradient-to-r from-brand-secondary/20 to-transparent blur-xl transition-all duration-500 rounded-3xl`}></div>
             <button 
               onClick={() => setActiveTab('Explore')}
-              className={`flex-1 sm:flex-none px-6 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === 'Explore' ? 'bg-slate-900 text-white shadow' : 'text-slate-400 hover:bg-slate-100'}`}
+              className={`flex-1 sm:flex-none px-6 py-3 rounded-2xl text-sm font-bold transition-all relative z-10 ${activeTab === 'Explore' ? 'bg-slate-800 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
             >
               Explore Artikel
             </button>
             <button 
               onClick={() => setActiveTab('MyArticles')}
-              className={`flex-1 sm:flex-none px-6 py-3 rounded-xl text-sm font-bold transition-all ${activeTab === 'MyArticles' ? 'bg-slate-900 text-white shadow' : 'text-slate-400 hover:bg-slate-100'}`}
+              className={`flex-1 sm:flex-none px-6 py-3 rounded-2xl text-sm font-bold transition-all relative z-10 ${activeTab === 'MyArticles' ? 'bg-slate-800 text-white shadow-lg' : 'text-slate-400 hover:text-white hover:bg-slate-800/50'}`}
             >
               Tulisan Saya
             </button>
           </div>
           <button 
             onClick={() => setShowCompose(true)}
-            className="w-full sm:w-auto bg-brand-secondary hover:bg-blue-600 text-white font-bold px-6 py-3 rounded-xl transition-all shadow-md flex justify-center items-center gap-2"
+            className="w-full sm:w-auto bg-gradient-to-r from-brand-secondary to-blue-600 hover:from-blue-500 hover:to-blue-400 text-white font-bold px-8 py-3 rounded-2xl transition-all shadow-lg hover:shadow-brand-secondary/30 transform hover:-translate-y-0.5 flex justify-center items-center gap-2 relative overflow-hidden group"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
-            Tulis Artikel
+            <div className="absolute inset-0 bg-white/20 transform -translate-x-full group-hover:translate-x-full transition-transform duration-700 ease-in-out"></div>
+            <svg className="w-5 h-5 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15.232 5.232l3.536 3.536m-2.036-5.036a2.5 2.5 0 113.536 3.536L6.5 21.036H3v-3.572L16.732 3.732z" /></svg>
+            <span className="relative z-10">Tulis Artikel</span>
           </button>
         </div>
 
@@ -58,18 +60,19 @@ const TechBlog = () => {
         {activeTab === 'Explore' && (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {publishedArticles.map((article, idx) => (
-              <div key={idx} className="bg-slate-900 rounded-3xl overflow-hidden shadow-sm border border-slate-800 hover:shadow-xl transition-shadow group">
-                <div className="h-48 bg-slate-200 w-full relative overflow-hidden">
-                  <div className="w-full h-full bg-slate-300 transform group-hover:scale-105 transition-transform duration-500"></div>
-                  <div className="absolute top-4 left-4">
-                    <span className="px-3 py-1 bg-slate-900/90 backdrop-blur rounded-full text-xs font-bold text-brand-primary">
+              <div key={idx} className="bg-slate-900/60 backdrop-blur-md rounded-3xl overflow-hidden shadow-xl border border-slate-700/50 hover:border-brand-secondary/50 transition-all duration-300 group hover:-translate-y-1">
+                <div className="h-56 w-full relative overflow-hidden">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10"></div>
+                  <img src={article.image} alt={article.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-700" />
+                  <div className="absolute top-4 left-4 z-20">
+                    <span className="px-4 py-1.5 bg-slate-950/80 backdrop-blur-md rounded-full text-xs font-bold text-white border border-slate-700/50 shadow-lg">
                       {article.tag}
                     </span>
                   </div>
                 </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-white mb-2 group-hover:text-brand-secondary transition-colors line-clamp-2">{article.title}</h3>
-                  <p className="text-slate-500 text-sm mb-4 line-clamp-3">{article.excerpt}</p>
+                <div className="p-6 relative z-20 -mt-6 bg-slate-900/80 backdrop-blur-xl rounded-t-3xl border-t border-slate-700/50">
+                  <h3 className="text-xl font-bold font-display text-white mb-3 group-hover:text-brand-secondary transition-colors line-clamp-2">{article.title}</h3>
+                  <p className="text-slate-400 text-sm mb-6 line-clamp-3 leading-relaxed">{article.excerpt}</p>
                   <div className="flex items-center justify-between pt-4 border-t border-slate-800">
                     <div className="flex items-center gap-2">
                       <div className="w-8 h-8 rounded-full bg-slate-200 flex items-center justify-center font-bold text-xs text-slate-400">
@@ -253,7 +256,8 @@ const publishedArticles = [
     author: 'Fauzan Hakim',
     date: '10 Jun 2026',
     readTime: '5 min read',
-    tag: 'Web Dev'
+    tag: 'Web Dev',
+    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
   },
   {
     title: 'Roadmap Belajar Data Science dari Nol',
@@ -261,7 +265,8 @@ const publishedArticles = [
     author: 'Siti Rahma',
     date: '08 Jun 2026',
     readTime: '8 min read',
-    tag: 'Data Science'
+    tag: 'Data Science',
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
   },
   {
     title: 'Mendeteksi Phishing Menggunakan Machine Learning',
@@ -269,7 +274,8 @@ const publishedArticles = [
     author: 'Budi Santoso',
     date: '05 Jun 2026',
     readTime: '10 min read',
-    tag: 'Cyber Sec'
+    tag: 'Cyber Sec',
+    image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80'
   }
 ];
 

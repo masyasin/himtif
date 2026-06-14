@@ -90,7 +90,7 @@ const Navbar = () => {
                 {group.href ? (
                   <Link 
                     to={group.href}
-                    className={`px-4 py-2 rounded-xl text-sm font-bold transition-all ${
+                    className={`px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-105 active:scale-95 inline-block ${
                       location.pathname === group.href 
                         ? 'text-brand-secondary bg-brand-secondary/10' 
                         : 'text-slate-300 hover:text-white hover:bg-white/10'
@@ -100,14 +100,20 @@ const Navbar = () => {
                   </Link>
                 ) : (
                   <button 
-                    className={`px-4 py-2 rounded-xl text-sm font-bold transition-all flex items-center gap-1 ${
+                    className={`px-4 py-2 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-105 active:scale-95 flex items-center gap-1 ${
                       activeDropdown === group.name
                         ? 'text-brand-secondary bg-brand-secondary/10'
                         : 'text-slate-300 hover:text-white hover:bg-white/10'
                     }`}
                   >
                     {group.name}
-                    <svg className={`w-4 h-4 transition-transform duration-200 ${activeDropdown === group.name ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                    <motion.svg 
+                      animate={{ rotate: activeDropdown === group.name ? 180 : 0 }} 
+                      transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                      className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                    >
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                    </motion.svg>
                   </button>
                 )}
 
@@ -116,24 +122,31 @@ const Navbar = () => {
                   <AnimatePresence>
                     {activeDropdown === group.name && (
                       <motion.div 
-                        initial={{ opacity: 0, y: 10, scale: 0.95 }}
-                        animate={{ opacity: 1, y: 0, scale: 1 }}
-                        exit={{ opacity: 0, y: 10, scale: 0.95 }}
-                        transition={{ duration: 0.2 }}
-                        className="absolute left-0 mt-2 w-56 bg-slate-900 rounded-2xl shadow-xl border border-slate-700 py-2 overflow-hidden"
+                        initial={{ opacity: 0, y: 20, scale: 0.9, rotateX: -15 }}
+                        animate={{ opacity: 1, y: 0, scale: 1, rotateX: 0 }}
+                        exit={{ opacity: 0, y: 10, scale: 0.95, transition: { duration: 0.2 } }}
+                        transition={{ type: 'spring', bounce: 0.5, duration: 0.6 }}
+                        style={{ transformOrigin: 'top center' }}
+                        className="absolute left-0 mt-4 w-64 bg-slate-900/80 backdrop-blur-2xl rounded-2xl shadow-2xl border border-slate-700/50 p-2 overflow-hidden z-50"
                       >
                         {group.items.map((item, iIdx) => (
-                          <Link 
+                          <motion.div
                             key={iIdx}
-                            to={item.href}
-                            className={`block px-5 py-2.5 text-sm font-bold transition-colors ${
-                              location.pathname === item.href 
-                                ? 'text-brand-secondary bg-brand-secondary/10 border-l-2 border-brand-secondary' 
-                                : 'text-slate-400 hover:text-white hover:bg-slate-800 border-l-2 border-transparent'
-                            }`}
+                            initial={{ opacity: 0, x: -10 }}
+                            animate={{ opacity: 1, x: 0 }}
+                            transition={{ delay: iIdx * 0.05 }}
                           >
-                            {item.name}
-                          </Link>
+                            <Link 
+                              to={item.href}
+                              className={`block px-4 py-3 rounded-xl text-sm font-bold transition-all duration-300 ${
+                                location.pathname === item.href 
+                                  ? 'text-brand-secondary bg-brand-secondary/10 shadow-inner' 
+                                  : 'text-slate-400 hover:text-white hover:bg-white/10 hover:translate-x-1'
+                              }`}
+                            >
+                              {item.name}
+                            </Link>
+                          </motion.div>
                         ))}
                       </motion.div>
                     )}
@@ -142,14 +155,14 @@ const Navbar = () => {
               </div>
             ))}
 
-            <Link to="/login" className="ml-4 bg-brand-primary hover:bg-brand-secondary border border-brand-primary hover:border-brand-secondary text-white px-6 py-2 rounded-xl text-sm font-bold transition-colors shadow-md">
+            <Link to="/login" className="ml-4 bg-gradient-to-r from-brand-secondary to-blue-600 hover:from-blue-500 hover:to-brand-secondary border border-transparent text-white px-6 py-2 rounded-xl text-sm font-bold transition-all duration-300 hover:scale-105 active:scale-95 shadow-lg shadow-brand-secondary/30 hover:shadow-brand-secondary/50">
               Login Portal
             </Link>
           </div>
 
           {/* Mobile Menu Button */}
           <div className="lg:hidden flex items-center gap-4 z-50">
-            <Link to="/login" className="bg-brand-primary text-white px-4 py-2 rounded-lg text-xs font-bold">Login</Link>
+            <Link to="/login" className="bg-gradient-to-r from-brand-secondary to-blue-600 hover:from-blue-500 hover:to-brand-secondary text-white px-4 py-2 rounded-lg text-xs font-bold transition-all duration-300 hover:scale-105 active:scale-95 shadow-md shadow-brand-secondary/30 hover:shadow-brand-secondary/50">Login</Link>
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               className="p-2 rounded-lg text-white bg-white/10"
@@ -169,19 +182,26 @@ const Navbar = () => {
         <AnimatePresence>
           {isMobileMenuOpen && (
             <motion.div 
-              initial={{ opacity: 0, height: 0 }}
-              animate={{ opacity: 1, height: 'auto' }}
-              exit={{ opacity: 0, height: 0 }}
-              className="lg:hidden mt-4 bg-slate-900 rounded-2xl shadow-xl border border-slate-800 overflow-hidden"
+              initial={{ opacity: 0, height: 0, y: -20 }}
+              animate={{ opacity: 1, height: 'auto', y: 0 }}
+              exit={{ opacity: 0, height: 0, y: -10 }}
+              transition={{ type: 'spring', bounce: 0.2, duration: 0.6 }}
+              className="lg:hidden mt-4 bg-slate-900/95 backdrop-blur-2xl rounded-2xl shadow-2xl border border-slate-800 overflow-hidden"
             >
               <div className="py-2 flex flex-col">
                 {navGroups.map((group, idx) => (
-                  <div key={idx} className="border-b border-slate-800 last:border-0">
+                  <motion.div 
+                    key={idx} 
+                    initial={{ opacity: 0, x: -20 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    transition={{ delay: idx * 0.05 }}
+                    className="border-b border-slate-800 last:border-0"
+                  >
                     {group.href ? (
                       <Link 
                         to={group.href}
-                        className={`block px-6 py-4 text-sm font-bold ${
-                          location.pathname === group.href ? 'text-brand-secondary bg-slate-800' : 'text-slate-300'
+                        className={`block px-6 py-4 text-sm font-bold transition-all duration-300 ${
+                          location.pathname === group.href ? 'text-brand-secondary bg-brand-secondary/10 pl-8' : 'text-slate-300 hover:bg-slate-800 hover:pl-8'
                         }`}
                       >
                         {group.name}
@@ -190,10 +210,16 @@ const Navbar = () => {
                       <div className="flex flex-col">
                         <button 
                           onClick={() => setActiveDropdown(activeDropdown === group.name ? null : group.name)}
-                          className="flex justify-between items-center px-6 py-4 text-sm font-bold text-slate-300 bg-slate-800/50"
+                          className="flex justify-between items-center px-6 py-4 text-sm font-bold text-slate-300 hover:bg-slate-800 transition-colors"
                         >
                           {group.name}
-                          <svg className={`w-4 h-4 transition-transform ${activeDropdown === group.name ? 'rotate-180' : ''}`} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                          <motion.svg 
+                            animate={{ rotate: activeDropdown === group.name ? 180 : 0 }} 
+                            transition={{ type: 'spring', stiffness: 200, damping: 15 }}
+                            className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"
+                          >
+                            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" />
+                          </motion.svg>
                         </button>
                         <AnimatePresence>
                           {activeDropdown === group.name && (
@@ -201,16 +227,17 @@ const Navbar = () => {
                               initial={{ height: 0, opacity: 0 }}
                               animate={{ height: 'auto', opacity: 1 }}
                               exit={{ height: 0, opacity: 0 }}
-                              className="bg-slate-900 flex flex-col overflow-hidden"
+                              transition={{ duration: 0.3, ease: 'easeInOut' }}
+                              className="bg-slate-950/50 flex flex-col overflow-hidden"
                             >
                               {group.items?.map((item, iIdx) => (
                                 <Link 
                                   key={iIdx}
                                   to={item.href}
-                                  className={`px-8 py-3 text-sm font-semibold border-l-2 ${
+                                  className={`px-10 py-3 text-sm font-semibold border-l-2 transition-all duration-300 ${
                                     location.pathname === item.href 
                                       ? 'text-brand-secondary border-brand-secondary bg-brand-secondary/10' 
-                                      : 'text-slate-500 border-transparent hover:bg-slate-800 hover:text-white'
+                                      : 'text-slate-500 border-transparent hover:bg-slate-800 hover:text-white hover:border-slate-500'
                                   }`}
                                 >
                                   {item.name}
@@ -221,7 +248,7 @@ const Navbar = () => {
                         </AnimatePresence>
                       </div>
                     )}
-                  </div>
+                  </motion.div>
                 ))}
               </div>
             </motion.div>

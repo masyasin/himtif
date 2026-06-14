@@ -14,8 +14,12 @@ const CodingArena = () => {
   };
 
   return (
-    <div className="pt-40 pb-16 min-h-screen bg-slate-900 text-white">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div className="pt-40 pb-16 min-h-screen bg-slate-950 text-white relative overflow-hidden">
+      {/* Dynamic Background */}
+      <div className="absolute top-[-10%] left-[-10%] w-[40%] h-[40%] bg-brand-secondary/20 rounded-full blur-[120px] pointer-events-none"></div>
+      <div className="absolute bottom-[-10%] right-[-10%] w-[30%] h-[30%] bg-emerald-500/10 rounded-full blur-[100px] pointer-events-none"></div>
+      
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {!activeChallenge ? (
           <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }}>
@@ -24,9 +28,9 @@ const CodingArena = () => {
               <motion.h1 
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                className="text-4xl md:text-5xl font-display font-bold mb-4"
+                className="text-4xl md:text-6xl font-display font-black tracking-tight mb-4"
               >
-                HIMTIF <span className="text-brand-secondary">Coding Arena</span>
+                HIMTIF <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-secondary to-purple-500">Coding Arena</span>
               </motion.h1>
               <motion.p 
                 initial={{ opacity: 0, y: 20 }}
@@ -55,7 +59,7 @@ const CodingArena = () => {
                     initial={{ opacity: 0, x: -20 }}
                     whileInView={{ opacity: 1, x: 0 }}
                     viewport={{ once: true }}
-                    className="bg-slate-800 p-6 rounded-2xl border border-slate-700 hover:border-brand-secondary transition-colors group flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6"
+                    className="bg-slate-900/60 backdrop-blur-md p-6 rounded-3xl border border-slate-700/50 hover:border-brand-secondary/50 shadow-xl hover:shadow-brand-secondary/10 transition-all group flex flex-col sm:flex-row justify-between items-start sm:items-center gap-6"
                   >
                     <div>
                       <div className="flex items-center gap-3 mb-2">
@@ -71,9 +75,10 @@ const CodingArena = () => {
                     </div>
                     <button 
                       onClick={() => setActiveChallenge(challenge.id)}
-                      className="bg-brand-primary hover:bg-brand-secondary text-white px-6 py-3 rounded-xl font-bold transition-colors shadow-md shrink-0 flex items-center gap-2"
+                      className="bg-gradient-to-r from-brand-secondary to-blue-600 hover:from-blue-500 hover:to-blue-400 text-white px-6 py-3 rounded-2xl font-bold transition-all shadow-lg hover:shadow-brand-secondary/30 transform hover:-translate-y-0.5 shrink-0 flex items-center gap-2 relative overflow-hidden"
                     >
-                      Kerjakan <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
+                      <span className="relative z-10">Kerjakan</span> 
+                      <svg className="w-4 h-4 relative z-10" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" /></svg>
                     </button>
                   </motion.div>
                 ))}
@@ -141,7 +146,7 @@ const CodingArena = () => {
             <div className="flex-grow grid grid-cols-1 lg:grid-cols-2 gap-4">
               
               {/* Problem Description */}
-              <div className="bg-slate-800 border border-slate-700 rounded-2xl p-6 overflow-y-auto flex flex-col">
+              <div className="bg-slate-900/80 backdrop-blur-xl border border-slate-700/50 rounded-3xl p-8 overflow-y-auto flex flex-col shadow-2xl">
                 <div className="flex justify-between items-start mb-6">
                   <div>
                     <h2 className="text-2xl font-bold font-display mb-2">{challenges.find(c => c.id === activeChallenge)?.title}</h2>
@@ -167,7 +172,9 @@ const CodingArena = () => {
               </div>
 
               {/* Code Editor Mock */}
-              <div className="bg-slate-950 border border-slate-700 rounded-2xl flex flex-col overflow-hidden">
+              <div className="bg-[#0D1117] border border-slate-700/50 rounded-3xl flex flex-col overflow-hidden shadow-2xl relative">
+                {/* Glow border effect */}
+                <div className="absolute inset-0 border-2 border-brand-secondary/20 rounded-3xl pointer-events-none"></div>
                 <div className="bg-slate-800 px-4 py-2 border-b border-slate-700 flex justify-between items-center">
                   <select className="bg-slate-900 border border-slate-700 text-slate-300 text-xs px-2 py-1 rounded outline-none">
                     <option>JavaScript (Node.js)</option>
@@ -182,16 +189,16 @@ const CodingArena = () => {
                 </div>
                 <div className="p-4 flex-grow font-mono text-sm text-slate-300 relative">
                   {/* Fake Code Editor Content */}
-                  <pre className="text-blue-400">/**</pre>
-                  <pre className="text-blue-400"> * @param {`{number[]}`} nums</pre>
-                  <pre className="text-blue-400"> * @param {`{number}`} target</pre>
-                  <pre className="text-blue-400"> * @return {`{number[]}`}</pre>
-                  <pre className="text-blue-400"> */</pre>
-                  <pre><span className="text-purple-400">function</span> <span className="text-yellow-200">twoSum</span>(nums, target) {'{'}</pre>
-                  <pre className="pl-4 text-slate-500">  // Tuliskan kodemu di sini</pre>
+                  <pre className="text-slate-500 italic mb-2">/**</pre>
+                  <pre className="text-slate-500 italic mb-1"> * @param {`{number[]}`} nums</pre>
+                  <pre className="text-slate-500 italic mb-1"> * @param {`{number}`} target</pre>
+                  <pre className="text-slate-500 italic mb-1"> * @return {`{number[]}`}</pre>
+                  <pre className="text-slate-500 italic mb-2"> */</pre>
+                  <pre><span className="text-[#FF7B72]">function</span> <span className="text-[#D2A8FF]">twoSum</span><span className="text-slate-300">(</span><span className="text-[#FFC23C]">nums</span><span className="text-slate-300">,</span> <span className="text-[#FFC23C]">target</span><span className="text-slate-300">) {'{'}</span></pre>
+                  <pre className="pl-4 text-slate-600 italic mt-2">  // Tuliskan kodemu di sini...</pre>
                   <pre className="pl-4">  </pre>
-                  <pre>{'}'}</pre>
-                  <div className="w-0.5 h-4 bg-slate-900 absolute top-[180px] left-8 animate-pulse"></div>
+                  <pre className="text-slate-300 mt-2">{'}'}</pre>
+                  <div className="w-0.5 h-5 bg-brand-secondary absolute top-[215px] left-8 animate-pulse shadow-[0_0_8px_theme(colors.brand.secondary)]"></div>
                 </div>
                 {/* Console Output */}
                 <div className="h-32 bg-black border-t border-slate-700 p-3 font-mono text-xs">

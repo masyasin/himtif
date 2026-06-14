@@ -66,26 +66,24 @@ const Event = () => {
                 key={event.id}
                 className="bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-800 hover:shadow-xl transition-all flex flex-col md:flex-row gap-6 relative overflow-hidden group"
               >
-                {/* Visual Label for Full Quota */}
-                {event.registered >= event.quota && (
-                  <div className="absolute top-4 right-4 bg-red-900/50 text-red-600 text-xs font-bold px-3 py-1 rounded-full z-10 border border-red-800">
-                    KUOTA PENUH
-                  </div>
-                )}
-
                 {/* Left Date / Icon Box */}
-                <div className="flex flex-row md:flex-col items-center justify-between md:justify-start bg-slate-950 border border-slate-800 rounded-2xl p-4 md:min-w-[120px] shrink-0 gap-4 md:gap-0">
+                <div className="flex flex-row md:flex-col items-center justify-between md:justify-start bg-slate-950 border border-slate-800 rounded-2xl p-4 md:min-w-[120px] shrink-0 gap-4 md:gap-0 shadow-inner">
                   <div className="text-center">
-                    <span className="text-sm font-bold text-slate-500 uppercase block">{event.month}</span>
-                    <span className="text-4xl font-display font-bold text-brand-primary block">{event.day}</span>
+                    <span className="text-sm font-bold text-slate-300 uppercase block tracking-wider">{event.month}</span>
+                    <span className="text-4xl font-display font-bold text-white block my-1 drop-shadow-md">{event.day}</span>
                   </div>
-                  <div className="md:mt-4 bg-brand-primary/10 text-brand-primary text-xs font-bold px-3 py-1.5 rounded-lg w-full text-center">
+                  <div className="md:mt-4 bg-brand-secondary/20 text-brand-secondary border border-brand-secondary/20 text-xs font-extrabold px-3 py-1.5 rounded-lg w-full text-center tracking-wide shadow-sm">
                     {event.type}
                   </div>
                 </div>
 
                 {/* Right Content */}
                 <div className="flex flex-col flex-grow">
+                  {event.registered >= event.quota && (
+                    <div className="mb-2 w-max bg-red-500/10 text-red-500 text-[10px] sm:text-xs font-bold px-3 py-1 rounded-full border border-red-500/20 uppercase tracking-wider">
+                      Kuota Penuh
+                    </div>
+                  )}
                   <h3 className="text-xl font-bold text-white mb-2 leading-tight">{event.title}</h3>
                   
                   {/* Waktu & Lokasi */}
@@ -175,11 +173,11 @@ const events = [
     type: 'Bootcamp',
     month: 'Ags',
     day: '15',
-    title: 'Fullstack Web Dev Bootcamp batch #2',
+    title: 'HIMTIF CodeCamp: Master Modern Web Development with React & Node.js',
     time: '09:00 - 15:00 WIB',
-    location: 'Lab Komputer 1',
+    location: 'Lab Terpadu Fakultas Teknik',
     quota: 50,
-    registered: 35,
+    registered: 50,
     hasCertificate: true,
     hasQrPresence: true
   },
@@ -187,12 +185,12 @@ const events = [
     id: 2,
     type: 'Seminar',
     month: 'Sep',
-    day: '02',
-    title: 'Cyber Security Awareness & Data Privacy',
+    day: '10',
+    title: 'TechTalks: Peran AI dalam Membentuk Masa Depan Industri Teknologi',
     time: '13:00 - 16:00 WIB',
-    location: 'Aula Utama UR',
-    quota: 200,
-    registered: 200,
+    location: 'Auditorium Utama Universitas',
+    quota: 250,
+    registered: 250,
     hasCertificate: true,
     hasQrPresence: true
   },
@@ -201,11 +199,11 @@ const events = [
     type: 'Hackathon',
     month: 'Okt',
     day: '20',
-    title: 'HIMTIF Hackathon: AI for Education',
+    title: 'HIMTIF Innovation Hackathon 2026: Solusi Cerdas untuk Smart City',
     time: '24 Jam (Menginap)',
-    location: 'Coworking Space UR',
-    quota: 30,
-    registered: 12,
+    location: 'Coworking Space Inovasi',
+    quota: 40,
+    registered: 25,
     hasCertificate: true,
     hasQrPresence: false
   },
@@ -214,11 +212,11 @@ const events = [
     type: 'Workshop',
     month: 'Nov',
     day: '05',
-    title: 'Data Science Fundamentals with Python',
+    title: 'Hands-on Workshop: Data Analytics Fundamental with Python',
     time: '10:00 - 14:00 WIB',
     location: 'Google Meet (Online)',
-    quota: 100,
-    registered: 89,
+    quota: 150,
+    registered: 120,
     hasCertificate: true,
     hasQrPresence: true
   },
@@ -227,11 +225,11 @@ const events = [
     type: 'Lomba',
     month: 'Nov',
     day: '15',
-    title: 'Kompetisi UI/UX Design Nasional',
-    time: 'Batas Pengumpulan 23:59',
+    title: 'National IT Competition: UI/UX Design & Competitive Programming',
+    time: 'Batas Pengumpulan 23:59 WIB',
     location: 'Online Submission',
     quota: 500,
-    registered: 150,
+    registered: 340,
     hasCertificate: true,
     hasQrPresence: false
   },
@@ -240,11 +238,11 @@ const events = [
     type: 'Webinar',
     month: 'Des',
     day: '01',
-    title: 'Cloud Computing 101 with AWS',
+    title: 'DevOps & Cloud Computing 101: Membangun Infrastruktur Skalabel',
     time: '19:00 - 21:00 WIB',
     location: 'Zoom Meeting',
     quota: 300,
-    registered: 45,
+    registered: 290,
     hasCertificate: true,
     hasQrPresence: true
   }

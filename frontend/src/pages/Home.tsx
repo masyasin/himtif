@@ -1,5 +1,6 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
+import AnimatedCounter from '../components/AnimatedCounter';
 
 const Home = () => {
   return (
@@ -29,9 +30,9 @@ const Home = () => {
             transition={{ duration: 0.8, delay: 0.2 }}
             className="text-3xl md:text-5xl lg:text-6xl font-display font-bold text-white mb-6 leading-tight tracking-tight drop-shadow-2xl"
           >
-            Mencetak Pemimpin <br/>
+            Shaping Tomorrow's <br/>
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-brand-secondary via-blue-400 to-purple-500">
-              Teknologi Masa Depan
+              Tech Leaders
             </span>
           </motion.h1>
 
@@ -41,7 +42,7 @@ const Home = () => {
             transition={{ duration: 0.8, delay: 0.4 }}
             className="text-lg md:text-xl text-slate-400 max-w-3xl mx-auto mb-10 leading-relaxed"
           >
-            Membangun ekosistem digital inovatif di Universitas Raharja melalui <strong className="text-white">Coding, Leadership,</strong> dan <strong className="text-white">Kolaborasi Global</strong>.
+            Building an innovative digital ecosystem at Raharja University through <strong className="text-white">Coding, Leadership,</strong> and <strong className="text-white">Global Collaboration</strong>.
           </motion.p>
 
           <motion.div 
@@ -67,13 +68,15 @@ const Home = () => {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-2 md:grid-cols-4 gap-8 divide-x divide-slate-800">
             {[
-              { label: 'Mahasiswa Aktif', value: '1,200+' },
-              { label: 'Project Inovasi', value: '450+' },
-              { label: 'Event Tahunan', value: '24' },
-              { label: 'Alumni Sukses', value: '3,000+' }
+              { label: 'Mahasiswa Aktif', value: 1200, suffix: '+' },
+              { label: 'Project Inovasi', value: 450, suffix: '+' },
+              { label: 'Event Tahunan', value: 24, suffix: '' },
+              { label: 'Alumni Sukses', value: 3000, suffix: '+' }
             ].map((stat, idx) => (
               <div key={idx} className="text-center px-4">
-                <div className="text-4xl md:text-5xl font-display font-bold text-white mb-2">{stat.value}</div>
+                <div className="text-4xl md:text-5xl font-display font-bold text-white mb-2">
+                  <AnimatedCounter to={stat.value} suffix={stat.suffix} />
+                </div>
                 <div className="text-sm font-bold text-slate-500 uppercase tracking-widest">{stat.label}</div>
               </div>
             ))}
@@ -143,7 +146,11 @@ const Home = () => {
             <div className="absolute top-0 right-0 w-64 h-64 bg-white/5 rounded-full blur-3xl"></div>
             
             <div className="w-48 h-48 md:w-64 md:h-64 rounded-full bg-slate-800 border-4 border-slate-700 overflow-hidden shrink-0 shadow-xl z-10">
-              <div className="w-full h-full bg-slate-700 flex items-center justify-center text-slate-500 font-bold">FOTO KETUA</div>
+              <img 
+                src="https://instagram.fcgk27-2.fna.fbcdn.net/v/t51.75761-15/486545609_18308104570229906_6944442348093282696_n.webp?_nc_cat=103&ig_cache_key=MzU5NDc4MDUxNTY2MjAyMTk5OA%3D%3D.3-ccb7-5&ccb=7-5&_nc_sid=58cdad&efg=eyJ2ZW5jb2RlX3RhZyI6IkNBUk9VU0VMX0lURU0ueHBpZHMuMTA4MC5zZHIucmVndWxhcl9waG90by5DMyJ9&_nc_ohc=OqrKVmGjxUYQ7kNvwHhYW0Z&_nc_oc=AdpgBXCnIcshOU12ljO0NvN5ZPznDCRiwDMbKQXlO0iAW0D4tzI9xxTrUTAkA42FYnZMgkFnhXy2joHifv4bDCY4&_nc_ad=z-m&_nc_cid=0&_nc_zt=23&_nc_ht=instagram.fcgk27-2.fna&_nc_gid=uXPcnbcVqAWfl84ZLuZLpA&_nc_ss=7a22e&oh=00_Af_S112MjT3OE8FtJ7VgSuBI4HyxhgejzY6i_mXjxVseUg&oe=6A34BCAB" 
+                alt="Foto Ketua Umum HIMTIF Rakan" 
+                className="w-full h-full object-cover object-center hover:scale-110 transition-transform duration-700"
+              />
             </div>
             
             <div className="z-10 text-center md:text-left">

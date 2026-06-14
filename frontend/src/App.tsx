@@ -1,5 +1,8 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { useEffect } from 'react';
+import { AnimatePresence } from 'framer-motion';
+import CustomCursor from './components/CustomCursor';
+import PageWrapper from './components/PageWrapper';
 import Navbar from './components/Navbar';
 import Footer from './components/Footer';
 import Home from './pages/Home';
@@ -19,6 +22,8 @@ import Prestasi from './pages/Prestasi';
 import DownloadCenter from './pages/DownloadCenter';
 import TechCommunity from './pages/TechCommunity';
 import TechBlog from './pages/TechBlog';
+import Login from './pages/Login';
+import FloatingActionButtons from './components/FloatingActionButtons';
 
 const TitleUpdater = () => {
   const location = useLocation();
@@ -42,6 +47,7 @@ const TitleUpdater = () => {
       '/download': 'Download Center | HIMTIF',
       '/community': 'Tech Community | HIMTIF',
       '/blog': 'Tech Blog | HIMTIF',
+      '/login': 'Login | HIMTIF',
     };
     
     document.title = routeTitles[location.pathname] || 'HIMTIF Universitas Raharja';
@@ -50,34 +56,46 @@ const TitleUpdater = () => {
   return null;
 };
 
+const AnimatedRoutes = () => {
+  const location = useLocation();
+  return (
+    <AnimatePresence mode="wait">
+      <Routes location={location} key={location.pathname}>
+        <Route path="/" element={<PageWrapper><Home /></PageWrapper>} />
+        <Route path="/profil" element={<PageWrapper><Profil /></PageWrapper>} />
+        <Route path="/berita" element={<PageWrapper><Berita /></PageWrapper>} />
+        <Route path="/event" element={<PageWrapper><Event /></PageWrapper>} />
+        <Route path="/proker" element={<PageWrapper><ProgramKerja /></PageWrapper>} />
+        <Route path="/galeri" element={<PageWrapper><Galeri /></PageWrapper>} />
+        <Route path="/karir" element={<PageWrapper><AlumniKarir /></PageWrapper>} />
+        <Route path="/aspirasi" element={<PageWrapper><Aspirasi /></PageWrapper>} />
+        <Route path="/library" element={<PageWrapper><DigitalLibrary /></PageWrapper>} />
+        <Route path="/showcase" element={<PageWrapper><ProjectShowcase /></PageWrapper>} />
+        <Route path="/ai" element={<PageWrapper><AIAssistant /></PageWrapper>} />
+        <Route path="/arena" element={<PageWrapper><CodingArena /></PageWrapper>} />
+        <Route path="/certificate" element={<PageWrapper><ECertificate /></PageWrapper>} />
+        <Route path="/prestasi" element={<PageWrapper><Prestasi /></PageWrapper>} />
+        <Route path="/download" element={<PageWrapper><DownloadCenter /></PageWrapper>} />
+        <Route path="/community" element={<PageWrapper><TechCommunity /></PageWrapper>} />
+        <Route path="/blog" element={<PageWrapper><TechBlog /></PageWrapper>} />
+        <Route path="/login" element={<PageWrapper><Login /></PageWrapper>} />
+      </Routes>
+    </AnimatePresence>
+  );
+};
+
 function App() {
   return (
     <Router>
       <TitleUpdater />
-      <div className="min-h-screen flex flex-col bg-slate-950 font-sans">
+      <CustomCursor />
+      <div className="min-h-screen flex flex-col bg-slate-950 font-sans selection:bg-brand-secondary/30 selection:text-white">
         <Navbar />
         <main className="flex-grow">
-          <Routes>
-            <Route path="/" element={<Home />} />
-            <Route path="/profil" element={<Profil />} />
-            <Route path="/berita" element={<Berita />} />
-            <Route path="/event" element={<Event />} />
-            <Route path="/proker" element={<ProgramKerja />} />
-            <Route path="/galeri" element={<Galeri />} />
-            <Route path="/karir" element={<AlumniKarir />} />
-            <Route path="/aspirasi" element={<Aspirasi />} />
-            <Route path="/library" element={<DigitalLibrary />} />
-            <Route path="/showcase" element={<ProjectShowcase />} />
-            <Route path="/ai" element={<AIAssistant />} />
-            <Route path="/arena" element={<CodingArena />} />
-            <Route path="/certificate" element={<ECertificate />} />
-            <Route path="/prestasi" element={<Prestasi />} />
-            <Route path="/download" element={<DownloadCenter />} />
-            <Route path="/community" element={<TechCommunity />} />
-            <Route path="/blog" element={<TechBlog />} />
-          </Routes>
+          <AnimatedRoutes />
         </main>
         <Footer />
+        <FloatingActionButtons />
       </div>
     </Router>
   );

@@ -75,12 +75,15 @@ const ProjectShowcase = () => {
                 className="bg-slate-800 rounded-3xl overflow-hidden shadow-xl hover:shadow-brand-secondary/20 transition-all border border-slate-700 flex flex-col group"
               >
                 {/* Thumbnail */}
-                <div className="h-48 bg-slate-700 relative overflow-hidden group-hover:opacity-90 transition-opacity">
-                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 to-transparent z-10" />
-                  <div className="w-full h-full flex items-center justify-center text-slate-500 font-bold tracking-widest text-lg bg-slate-600">
-                    THUMBNAIL
-                  </div>
-                  <span className="absolute top-4 left-4 z-20 bg-brand-primary/90 backdrop-blur text-white text-[10px] uppercase font-bold px-3 py-1.5 rounded-lg border border-brand-secondary/30">
+                <div className="h-52 relative overflow-hidden bg-slate-800">
+                  <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent z-10 opacity-90" />
+                  <img 
+                    src={project.image} 
+                    alt={project.title} 
+                    className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500"
+                    loading="lazy"
+                  />
+                  <span className="absolute top-4 left-4 z-20 bg-brand-primary/90 backdrop-blur text-white text-[10px] uppercase font-bold px-3 py-1.5 rounded-lg border border-brand-secondary/30 shadow-lg">
                     {project.category}
                   </span>
                 </div>
@@ -197,10 +200,60 @@ const ProjectShowcase = () => {
 };
 
 const projects = [
-  { title: 'Siperkasa: Sistem Presensi Kuliah Berbasis Face Recognition', author: 'Budi Santoso', category: 'Tugas Akhir', desc: 'Sistem presensi terintegrasi menggunakan model deep learning untuk mendeteksi wajah mahasiswa secara real-time di kelas.', github: '#', demo: '#' },
-  { title: 'LearnTech Edu', author: 'Nadia & Tim', category: 'Startup Mahasiswa', desc: 'Platform e-learning interaktif yang gamified untuk anak SMA, memenangkan pendanaan KemenkopUKM 2026.', github: null, demo: '#' },
-  { title: 'Aplikasi Inventaris Barang Lab TI', author: 'Kelompok 4 (Web Dev)', category: 'Project Kuliah', desc: 'Tugas besar mata kuliah Pemrograman Web Lanjut. Menggunakan React, Express, dan MySQL.', github: '#', demo: null },
-  { title: 'IoT Smart Farming System', author: 'Ahmad Fauzan', category: 'Tugas Akhir', desc: 'Implementasi IoT untuk penyiraman tomat otomatis berdasarkan sensor kelembapan tanah dan suhu udara yang bisa dipantau lewat mobile app.', github: '#', demo: '#' },
+  { 
+    title: 'Siperkasa: Sistem Presensi Kuliah Berbasis Face Recognition', 
+    author: 'Budi Santoso', 
+    category: 'Tugas Akhir', 
+    desc: 'Sistem presensi terintegrasi menggunakan model deep learning untuk mendeteksi wajah mahasiswa secara real-time di kelas.', 
+    github: '#', 
+    demo: '#',
+    image: 'https://images.unsplash.com/photo-1555949963-aa79dcee981c?q=80&w=800&auto=format&fit=crop'
+  },
+  { 
+    title: 'LearnTech Edu', 
+    author: 'Nadia & Tim', 
+    category: 'Startup Mahasiswa', 
+    desc: 'Platform e-learning interaktif yang gamified untuk anak SMA, memenangkan pendanaan KemenkopUKM 2026.', 
+    github: null, 
+    demo: '#',
+    image: 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?q=80&w=800&auto=format&fit=crop'
+  },
+  { 
+    title: 'Aplikasi Inventaris Barang Lab TI', 
+    author: 'Kelompok 4 (Web Dev)', 
+    category: 'Project Kuliah', 
+    desc: 'Tugas besar mata kuliah Pemrograman Web Lanjut. Menggunakan React, Express, dan MySQL.', 
+    github: '#', 
+    demo: null,
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?q=80&w=800&auto=format&fit=crop'
+  },
+  { 
+    title: 'IoT Smart Farming System', 
+    author: 'Ahmad Fauzan', 
+    category: 'Tugas Akhir', 
+    desc: 'Implementasi IoT untuk penyiraman tomat otomatis berdasarkan sensor kelembapan tanah dan suhu udara yang bisa dipantau lewat mobile app.', 
+    github: '#', 
+    demo: '#',
+    image: 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?q=80&w=800&auto=format&fit=crop'
+  },
+  { 
+    title: 'HIMTIF CyberSec Platform', 
+    author: 'Divisi Ristek HIMTIF', 
+    category: 'Project Kuliah', 
+    desc: 'Platform belajar ethical hacking dan CTF (Capture The Flag) interaktif khusus untuk mahasiswa internal.', 
+    github: '#', 
+    demo: '#',
+    image: 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?q=80&w=800&auto=format&fit=crop'
+  },
+  { 
+    title: 'E-Waste: Jual Beli Sampah Elektronik', 
+    author: 'Reza & Kevin', 
+    category: 'Startup Mahasiswa', 
+    desc: 'Aplikasi mobile marketplace yang menghubungkan pengepul sampah elektronik dengan masyarakat sekitar.', 
+    github: null, 
+    demo: '#',
+    image: 'https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?q=80&w=800&auto=format&fit=crop'
+  }
 ];
 
 export default ProjectShowcase;

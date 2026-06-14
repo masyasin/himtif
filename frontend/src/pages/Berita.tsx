@@ -89,8 +89,9 @@ const Berita = () => {
                 transition={{ duration: 0.3 }}
                 className="bg-slate-900 rounded-3xl overflow-hidden shadow-sm hover:shadow-xl transition-all border border-slate-800 group flex flex-col"
               >
-                <div className="h-52 bg-slate-200 relative overflow-hidden">
-                  <div className="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500 bg-slate-300" />
+                <div className="h-52 bg-slate-900 relative overflow-hidden">
+                  <img src={(item as any).image} alt={item.title} className="w-full h-full object-cover transform group-hover:scale-110 transition-transform duration-500" loading="lazy" />
+                  <div className="absolute inset-0 bg-gradient-to-b from-slate-900/50 to-transparent pointer-events-none" />
                   <div className="absolute top-4 left-4 z-20">
                     <span className="px-3 py-1 bg-slate-900/90 backdrop-blur-sm rounded-full text-xs font-bold text-brand-secondary shadow-sm">
                       {item.category}
@@ -194,7 +195,8 @@ const news = [
     category: 'Artificial Intelligence',
     date: '12 Jun 2026',
     author: 'Tim Penulis AI',
-    comments: 12
+    comments: 12,
+    image: 'https://images.unsplash.com/photo-1620712943543-bcc4688e7485?w=800&q=80'
   },
   {
     id: 2,
@@ -203,7 +205,8 @@ const news = [
     category: 'Berita HIMTI',
     date: '10 Jun 2026',
     author: 'Humas HIMTIF',
-    comments: 24
+    comments: 24,
+    image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80'
   },
   {
     id: 3,
@@ -212,7 +215,8 @@ const news = [
     category: 'Programming',
     date: '05 Jun 2026',
     author: 'Divisi TI',
-    comments: 8
+    comments: 8,
+    image: 'https://images.unsplash.com/photo-1633356122544-f134324a6cee?w=800&q=80'
   },
   {
     id: 4,
@@ -221,7 +225,8 @@ const news = [
     category: 'Cyber Security',
     date: '02 Jun 2026',
     author: 'Budi (CyberSec Club)',
-    comments: 5
+    comments: 5,
+    image: 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80'
   },
   {
     id: 5,
@@ -230,7 +235,8 @@ const news = [
     category: 'Data Science',
     date: '28 Mei 2026',
     author: 'DataLab UR',
-    comments: 15
+    comments: 15,
+    image: 'https://images.unsplash.com/photo-1551288049-bebda4e38f71?w=800&q=80'
   },
   {
     id: 6,
@@ -239,7 +245,8 @@ const news = [
     category: 'Event Kampus',
     date: '25 Mei 2026',
     author: 'Divisi Akademik',
-    comments: 32
+    comments: 32,
+    image: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=800&q=80'
   }
 ];
 

@@ -42,19 +42,24 @@ const Aspirasi = () => {
               {/* Jenis Aspirasi */}
               <div>
                 <label className="block text-sm font-bold text-slate-300 mb-3">Jenis Aspirasi</label>
-                <div className="grid grid-cols-3 gap-3">
-                  {['Kritik', 'Saran', 'Keluhan Akademik'].map(type => (
+                <div className="grid grid-cols-2 gap-3">
+                  {[
+                    { id: 'Kritik', color: 'bg-rose-600 border-rose-500 shadow-rose-600/30' },
+                    { id: 'Saran', color: 'bg-amber-500 border-amber-400 shadow-amber-500/30' },
+                    { id: 'Keluhan Akademik', color: 'bg-indigo-600 border-indigo-500 shadow-indigo-600/30' },
+                    { id: 'Fasilitas', color: 'bg-emerald-600 border-emerald-500 shadow-emerald-600/30' }
+                  ].map(type => (
                     <button
-                      key={type}
+                      key={type.id}
                       type="button"
-                      onClick={() => setAspirasiType(type)}
-                      className={`py-3 px-2 rounded-xl text-sm font-bold border transition-all ${
-                        aspirasiType === type 
-                          ? 'bg-brand-primary text-white border-brand-primary shadow-md' 
-                          : 'bg-slate-900 text-slate-400 border-slate-700 hover:border-slate-600 hover:bg-slate-950'
+                      onClick={() => setAspirasiType(type.id)}
+                      className={`py-3 px-2 rounded-xl text-sm font-bold border transition-all duration-300 ${
+                        aspirasiType === type.id 
+                          ? `${type.color} text-white shadow-lg transform scale-[1.02]` 
+                          : 'bg-slate-900 text-slate-400 border-slate-700 hover:border-slate-500 hover:bg-slate-800'
                       }`}
                     >
-                      {type}
+                      {type.id}
                     </button>
                   ))}
                 </div>
@@ -63,18 +68,18 @@ const Aspirasi = () => {
               {/* Opsi Identitas */}
               <div>
                 <label className="block text-sm font-bold text-slate-300 mb-3">Opsi Identitas</label>
-                <div className="flex bg-slate-100 p-1 rounded-xl">
+                <div className="flex bg-slate-950 p-1.5 rounded-xl border border-slate-800">
                   <button
                     type="button"
                     onClick={() => setIsAnonymous(false)}
-                    className={`flex-1 py-3 text-sm font-bold rounded-lg transition-all ${!isAnonymous ? 'bg-slate-900 shadow text-brand-primary' : 'text-slate-500'}`}
+                    className={`flex-1 py-3 text-sm font-bold rounded-lg transition-all ${!isAnonymous ? 'bg-slate-800 text-white shadow border border-slate-700' : 'text-slate-500 hover:text-slate-300 hover:bg-slate-900/50'}`}
                   >
                     Terbuka (Nama Asli)
                   </button>
                   <button
                     type="button"
                     onClick={() => setIsAnonymous(true)}
-                    className={`flex-1 py-3 text-sm font-bold rounded-lg transition-all flex items-center justify-center gap-2 ${isAnonymous ? 'bg-slate-800 shadow text-white' : 'text-slate-500'}`}
+                    className={`flex-1 py-3 text-sm font-bold rounded-lg transition-all flex items-center justify-center gap-2 ${isAnonymous ? 'bg-slate-800 text-white shadow border border-slate-700' : 'text-slate-500 hover:text-slate-300 hover:bg-slate-900/50'}`}
                   >
                     <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}><path strokeLinecap="round" strokeLinejoin="round" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.899a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /><path strokeLinecap="round" strokeLinejoin="round" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" /></svg>
                     Anonim
@@ -165,9 +170,9 @@ const Aspirasi = () => {
                     </div>
                     
                     {item.response && (
-                      <div className="bg-slate-950 border border-slate-800 p-2 rounded-lg text-xs text-slate-400 flex items-start gap-2 max-w-[200px]">
-                        <span className="font-bold text-brand-primary shrink-0">BEM:</span> 
-                        <span className="line-clamp-1 italic">{item.response}</span>
+                      <div className="bg-slate-950 border border-slate-800 p-3 rounded-lg text-xs flex items-start gap-2 sm:max-w-[250px]">
+                        <span className="font-bold text-brand-primary shrink-0">HIMTIF:</span> 
+                        <span className="line-clamp-2 italic text-slate-300 leading-relaxed">{item.response}</span>
                       </div>
                     )}
                   </div>
@@ -176,7 +181,7 @@ const Aspirasi = () => {
               ))}
             </div>
 
-            <button className="w-full mt-6 py-4 border-2 border-slate-700 border-dashed rounded-2xl text-slate-500 font-bold hover:bg-slate-100 hover:border-slate-600 transition-colors">
+            <button className="w-full mt-6 py-4 border-2 border-slate-700 border-dashed rounded-2xl text-slate-500 font-bold hover:bg-slate-800 hover:text-white hover:border-slate-500 transition-colors">
               Lihat Aspirasi Terdahulu
             </button>
           </motion.div>
@@ -191,29 +196,47 @@ const trackingList = [
   {
     type: 'Keluhan Akademik',
     status: 'Diproses',
-    message: 'Server SIAM/SIAKAD sering down pada saat masa pengisian KRS, mohon untuk HIMTIF bisa menjembatani ke pihak IT kampus agar servernya diperbesar kapasitasnya.',
+    message: 'Server SIAKAD sering down pada saat masa pengisian KRS, mohon untuk HIMTIF bisa menjembatani ke pihak IT kampus agar servernya diperbesar kapasitasnya atau dijadwalkan per angkatan.',
     sender: 'Mahasiswa Anonim',
     isAnonymous: true,
     date: '12 Jun 2026',
-    response: 'Sedang didiskusikan dengan pihak BAAK dan Puskom.'
+    response: 'Aspirasi telah diteruskan ke pihak Puskom. Mereka berjanji akan menambah bandwidth server pada masa KRS semester depan.'
   },
   {
     type: 'Saran',
     status: 'Selesai',
-    message: 'Adakan lebih banyak kompetisi internal seperti e-sport atau coding ringan agar keakraban antar angkatan semakin terjalin di luar acara formal.',
+    message: 'Adakan lebih banyak kompetisi internal seperti e-sport atau coding ringan agar keakraban antar angkatan semakin terjalin di luar acara formal perkuliahan.',
     sender: 'Andi Pratama',
     isAnonymous: false,
     date: '05 Jun 2026',
-    response: 'Terima kasih, sudah dijadwalkan pada proker bulan depan.'
+    response: 'Terima kasih, saran diterima. Program kerja "HIMTIF Fun Games" sudah dijadwalkan pada bulan depan.'
   },
   {
     type: 'Kritik',
     status: 'Diterima',
-    message: 'Kondisi kebersihan di ruang sekre HIMTIF terkadang kurang terjaga setelah selesai rapat besar. Mohon ketegasan aturan piket harian.',
+    message: 'Kondisi kebersihan di ruang sekre HIMTIF terkadang kurang terjaga setelah selesai rapat besar. Mohon ketegasan aturan piket harian untuk semua pengurus.',
     sender: 'Mahasiswa Anonim',
     isAnonymous: true,
     date: '14 Jun 2026',
     response: null
+  },
+  {
+    type: 'Fasilitas',
+    status: 'Selesai',
+    message: 'AC di Ruang Lab Komputer 2 kurang dingin dan beberapa keyboard PC sudah keras. Sangat mengganggu ketika sedang praktikum pemrograman web.',
+    sender: 'Budi Santoso',
+    isAnonymous: false,
+    date: '01 Jun 2026',
+    response: 'Sudah dilaporkan ke laboran. Teknisi AC telah melakukan servis, dan 5 keyboard baru telah diganti.'
+  },
+  {
+    type: 'Saran',
+    status: 'Diproses',
+    message: 'Tolong adakan bootcamp atau pelatihan khusus untuk persiapan sertifikasi internasional seperti AWS atau Mikrotik bagi mahasiswa tingkat akhir.',
+    sender: 'Mahasiswa Anonim',
+    isAnonymous: true,
+    date: '10 Jun 2026',
+    response: 'Sedang didiskusikan dengan prodi untuk pengadaan subsidi biaya ujian sertifikasi.'
   }
 ];
 

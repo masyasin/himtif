@@ -78,15 +78,20 @@ const Prestasi = () => {
                   <div className="h-64 bg-slate-900 relative overflow-hidden flex flex-col">
                     {/* The Media */}
                     <div className="flex-grow flex items-center justify-center bg-slate-800 relative">
-                      {currentMedia === 'Foto' && (
-                        <div className="absolute inset-0 bg-gradient-to-tr from-slate-700 to-slate-600 flex items-center justify-center text-slate-300 font-bold text-2xl tracking-widest">FOTO BERSAMA</div>
-                      )}
-                      {currentMedia === 'Sertifikat' && (
-                        <div className="absolute inset-0 bg-gradient-to-tr from-amber-800 to-amber-600 flex items-center justify-center text-amber-200 font-bold text-2xl tracking-widest">SERTIFIKAT PENGHARGAAN</div>
-                      )}
-                      {currentMedia === 'Dokumentasi' && (
-                        <div className="absolute inset-0 bg-gradient-to-tr from-blue-800 to-blue-600 flex items-center justify-center text-blue-200 font-bold text-2xl tracking-widest">VIDEO / DOKUMENTASI LOMBA</div>
-                      )}
+                      <AnimatePresence mode="wait">
+                        <motion.img
+                          key={currentMedia}
+                          initial={{ opacity: 0, scale: 1.05 }}
+                          animate={{ opacity: 1, scale: 1 }}
+                          exit={{ opacity: 0 }}
+                          transition={{ duration: 0.3 }}
+                          src={(item as any).images[currentMedia]}
+                          alt={`${item.title} - ${currentMedia}`}
+                          className="absolute inset-0 w-full h-full object-cover"
+                        />
+                      </AnimatePresence>
+                      {/* Gradient overlay to ensure text visibility */}
+                      <div className="absolute inset-0 bg-gradient-to-t from-slate-900 via-slate-900/40 to-transparent pointer-events-none" />
                     </div>
                     
                     {/* Media Tabs */}
@@ -157,7 +162,12 @@ const achievements = [
     year: '2025',
     students: 'Tim CodeX (Budi, Siti, Anton)',
     desc: 'Berhasil mengalahkan lebih dari 100 tim dari universitas seluruh Indonesia dengan inovasi aplikasi deteksi stunting.',
-    organizer: 'Puspresnas Kemdikbudristek'
+    organizer: 'Puspresnas Kemdikbudristek',
+    images: {
+      'Foto': 'https://images.unsplash.com/photo-1511632765486-a01980e01a18?w=800&q=80',
+      'Sertifikat': 'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&q=80',
+      'Dokumentasi': 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800&q=80'
+    }
   },
   {
     id: 2,
@@ -166,7 +176,12 @@ const achievements = [
     year: '2026',
     students: 'Andi & Team',
     desc: 'Meraih medali emas melalui penelitian "Smart Agriculture System" berbasis Internet of Things yang mampu menghemat air hingga 40%.',
-    organizer: 'IYIA'
+    organizer: 'IYIA',
+    images: {
+      'Foto': 'https://images.unsplash.com/photo-1552664730-d307ca884978?w=800&q=80',
+      'Sertifikat': 'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&q=80',
+      'Dokumentasi': 'https://images.unsplash.com/photo-1586771107445-d3ca888129ff?w=800&q=80'
+    }
   },
   {
     id: 3,
@@ -175,7 +190,12 @@ const achievements = [
     year: '2026',
     students: 'Nadia Putri (Founder LearnTech)',
     desc: 'Startup edutech bentukan mahasiswa HIMTIF mendapatkan pendanaan tahap awal sebesar Rp 50 Juta dari program inkubasi.',
-    organizer: 'KemenkopUKM'
+    organizer: 'KemenkopUKM',
+    images: {
+      'Foto': 'https://images.unsplash.com/photo-1556761175-4b46a572b786?w=800&q=80',
+      'Sertifikat': 'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&q=80',
+      'Dokumentasi': 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?w=800&q=80'
+    }
   },
   {
     id: 4,
@@ -184,7 +204,12 @@ const achievements = [
     year: '2025',
     students: 'HIMTIF Cyber Team',
     desc: 'Menunjukkan kemampuan penetration testing dan keamanan sistem terbaik kedua se-Pulau Jawa.',
-    organizer: 'CyberSec Indo'
+    organizer: 'CyberSec Indo',
+    images: {
+      'Foto': 'https://images.unsplash.com/photo-1526374965328-7f61d4dc18c5?w=800&q=80',
+      'Sertifikat': 'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&q=80',
+      'Dokumentasi': 'https://images.unsplash.com/photo-1550751827-4bd374c3f58b?w=800&q=80'
+    }
   },
   {
     id: 5,
@@ -193,7 +218,12 @@ const achievements = [
     year: '2026',
     students: 'Fauzan Hakim',
     desc: 'Berhasil mempublikasikan hasil tugas akhir mengenai "Optimization of Deep Learning Model for Image Recognition" di jurnal internasional bereputasi.',
-    organizer: 'IEEE Access'
+    organizer: 'IEEE Access',
+    images: {
+      'Foto': 'https://images.unsplash.com/photo-1454165804606-c3d57bc86b40?w=800&q=80',
+      'Sertifikat': 'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&q=80',
+      'Dokumentasi': 'https://images.unsplash.com/photo-1516321318423-f06f85e504b3?w=800&q=80'
+    }
   },
   {
     id: 6,
@@ -202,7 +232,12 @@ const achievements = [
     year: '2026',
     students: 'Rina Wijayanti',
     desc: 'Meraih predikat mahasiswa lulusan terbaik Fakultas Teknik Informasi dengan IPK sempurna 4.00.',
-    organizer: 'Universitas Raharja'
+    organizer: 'Universitas Raharja',
+    images: {
+      'Foto': 'https://images.unsplash.com/photo-1523240795612-9a054b0db644?w=800&q=80',
+      'Sertifikat': 'https://images.unsplash.com/photo-1589330694653-ded6df03f754?w=800&q=80',
+      'Dokumentasi': 'https://images.unsplash.com/photo-1541339907198-e08756dedf3f?w=800&q=80'
+    }
   }
 ];
 
